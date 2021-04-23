@@ -58,12 +58,67 @@ const articlesModule = {
   }
 }
 
+const booksModule = {
+  namespaced: true,
+  state: () => {
+    return [
+      {id: 1, title : "Il signore degli Anelli", price: 15},
+      {id: 2, title : "La Bibbia", price: 30},
+      {id: 3, title : "Steve Jobs", price: 30},
+      {id: 4, title : "React Programming", price: 30}
+    ]
+  },
+  getters: {
+    getBooks : (state) => {
+        return state;
+    }
+  }
+}
+
+const cartModule = {
+  namespaced: true,
+  state: () => {
+    return [];
+  },
+  getters: {
+    getCart(state) {
+      return state;
+    },
+    getTotal(state) {
+      let total = 0;
+
+      state.forEach(function(book){
+        total += book.price;
+      })
+      if(total > 10){
+        return total - 5
+      }
+
+      return total;
+    }
+  },
+  mutations: {
+    addBookToCart(state, book){
+      state.push(book);
+    },
+    removeBookFromCart(state, bookId){
+      const indexOfBookInStateArray = state.map(item => item.id).indexOf(bookId);
+      state.splice(indexOfBookInStateArray, 1);
+
+    }
+  }
+}
+
 const store = new Vuex.Store({
   modules: {
     user: userModule,
-    articles: articlesModule
+    articles: articlesModule,
+    books: booksModule,
+    cart: cartModule
   }
 })
+
+
 
 Vue.config.productionTip = false
 
