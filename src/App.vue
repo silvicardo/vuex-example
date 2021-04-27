@@ -1,9 +1,10 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
+    <PersonaggioSwapi />
     <HelloWorld msg="Welcome to Your Vue.js App"/>
     <BooksList/>
     <Cart />
+    
   </div>
 </template>
 
@@ -11,13 +12,15 @@
 import BooksList from './components/BooksList.vue'
 import Cart from './components/Cart.vue'
 import HelloWorld from './components/HelloWorld.vue'
+import PersonaggioSwapi from './components/StarWarsCharacter.vue'
 
 export default {
   name: 'App',
   components: {
     HelloWorld,
     BooksList,
-    Cart
+    Cart,
+    PersonaggioSwapi
   }
 }
  </script>

@@ -109,12 +109,63 @@ const cartModule = {
   }
 }
 
+const starWarsModule = {
+  namespaced: true,
+  state : () => {
+    return {
+      character : null,
+      isFetching: false,
+      apiError: ''
+    }
+  },
+  getters:{
+    getCharacter : (state) => {
+      return state.character;
+    },
+    getIsFetching: (state) => {
+      return state.isFetching;
+    },
+    getApiError: (state) => {
+      return state.apiError;
+    }
+  },
+  mutations: {//SINCRONA
+    onFetchInit(state){
+      state.isFetching = true;
+      state.apiError = "";
+    },
+    onFetchSuccess (state, newCharacter){
+      state.character = newCharacter;
+      state.isFetching = false;
+    },
+    onFetchFailure (state, errorMessage){
+      state.isFetching = false;
+      state.apiError = errorMessage;
+    }
+
+  },
+  actions: {//ASINCRONO -> CHIAMATE API
+    fetchCharacter(context, characterId){
+      context.commit('onFetchInit')
+      fetch("https://swapi.dev/api/people/" + characterId + "/")
+      .then(res => res.json())
+      .then(data => {
+          context.commit('onFetchSuccess', data)
+      })
+      .catch(error => {
+        context.commit('onFetchFailure', error.message)
+      })
+    }
+  }
+}
+
 const store = new Vuex.Store({
   modules: {
     user: userModule,
     articles: articlesModule,
     books: booksModule,
-    cart: cartModule
+    cart: cartModule,
+    swapiCharacter: starWarsModule
   }
 })
 

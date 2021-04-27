@@ -26,7 +26,6 @@ export default {
             removeItemById: "cart/removeBookFromCart"
         }),
          isBookInCart(id){
-            
             const booksInCartWithId = this.ilMioCarrello.filter(function(book){
                 return id === book.id
             });
